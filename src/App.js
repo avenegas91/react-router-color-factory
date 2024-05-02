@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Colors from "./Colors";
+import Color from "./Color";
+import NewColorForm from "./NewColorForm";
 
-function App() {
+const App = () => {
+  const [colors, setColors] = useState(['red', 'blue', 'yellow'])
+  const addColor = (color) => {
+    setColors([...colors, color])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path = "/colors">
+            <Colors colors={colors} />
+          </Route>
+          <Route exact path = "/colors/new" >
+            <NewColorForm addColor={addColor} />
+          </Route>
+          <Route exact path = "/colors/:color">
+            <Color colors={colors}/>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
-  );
+  )
 }
 
 export default App;
